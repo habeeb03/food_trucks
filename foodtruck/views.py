@@ -12,4 +12,4 @@ class FoodTruckList(ListAPIView):
         latitude = float(request.GET.get('lat', 0))
         longitude = float(request.GET.get('lng', 0))
 
-        return find_nearby_food_trucks(latitude, longitude).values()
+        return find_nearby_food_trucks(latitude, longitude)
