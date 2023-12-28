@@ -25,3 +25,10 @@ Access the Django app at <url>http://localhost:8080, it will serve the landing (
 You can enter the lat, lng respectvely (as comma seperated) in the serach box and submit to browse the nearby trucks
 
 API end point is live at http://localhost:8080/api/trucks/
+
+
+You can use CLI to get the truck list
+
+``` python manage.py list_trucks <lat> <lng> ```
+
+
