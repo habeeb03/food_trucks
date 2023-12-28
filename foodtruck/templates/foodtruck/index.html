@@ -1,0 +1,73 @@
+{% extends 'layouts/base.html' %}
+
+{% block main-content %}
+    <h1>Search for trucks!</h1>
+
+    <div class="container">
+        <form>
+          <div class="form-group">
+            <label for="location">Enter location</label>
+            <input type="text" class="form-control" id="location" aria-describedby="locationHelp" placeholder="37.729438288454, -122.376657800723">
+            <small id="locationHelp" class="form-text text-muted">Enter lat & lng, seperated by comma(,)</small>
+          </div>
+          <button type="button" class="btn btn-primary mt-3" onclick="searchForTrucks()">Search</button>
+        </form>
+
+        <div class="row mt-5" id="idTruckList">
+
+        </div>
+        <button type="button" class="btn btn-toolbar" id="idNextPage" onclick="searchForTrucks()" style="display: none;">Next</button>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+
+        let url = '/api/trucks/?'
+
+        const updateTruckList = (trucks, nextUrl=null) => {
+            let htmlElement = ''
+            trucks.forEach((truck) => {
+                htmlElement += `
+                <div class="col-3 mb-3">
+                    <div class="card" style="width: 18rem;">
+                      <div class="card-body">
+                        <h6 class="card-title">${truck.applicant} - <span class="text-secondary"> ${truck.distance} km<span></h6>
+                        <p class="card-text">${truck.description}</p>
+                        <p class="card-text text-muted">${truck.address}</p>
+                      </div>
+                    </div>
+                </div>`
+            })
+            document.getElementById('idTruckList').innerHTML = htmlElement;
+            if (nextUrl != null && nextUrl !== '') {
+                document.getElementById('idNextPage').style.display = 'block'
+                url = nextUrl
+            } else {
+                url = '/api/trucks/?'
+                document.getElementById('idNextPage').style.display = 'none'
+            }
+        }
+
+        const searchForTrucks = () => {
+            const locationData = document.getElementById('location').value.split(',');
+            const lat = locationData[0].trim();
+            const lng = locationData[1].trim();
+
+            const params = new URLSearchParams();
+            params.append('lat', lat);
+            params.append('lng', lng);
+
+            fetch(url).then(response => {
+                if(!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            }).then(data => {
+                updateTruckList(data.results, data.next)
+            }).catch(error => {
+                console.error(error)
+            })
+        }
+    </script>
+{% endblock %}

@@ -1,6 +1,9 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path("trucks/", views.FoodTruckList.as_view(), name='find-trucks')
+    path('', views.IndexView.as_view(), name='index'),
+    path('api/', include([
+        path("trucks/", views.FoodTruckList.as_view(), name='find-trucks')
+    ]))
 ]
