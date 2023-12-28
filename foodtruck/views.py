@@ -25,7 +25,7 @@ class FoodTruckList(ListAPIView):
     Example:
     - Request:
       ```
-      GET /api/food-trucks/?lat=37.7749&lng=-122.4194
+      GET /api/trucks/?lat=37.7749&lng=-122.4194
       ```
 
     - Response:
