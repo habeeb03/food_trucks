@@ -11,7 +11,7 @@ Make sure you have Docker and Docker Compose installed on your machine.
 ### 1. Clone the Repository
 
 ```bash
-git clone [<repository_url>](https://github.com/habeeb03/food_trucks.git)https://github.com/habeeb03/food_trucks.git
+git clone https://github.com/habeeb03/food_trucks.git
 cd food_trucks
 ```
 
